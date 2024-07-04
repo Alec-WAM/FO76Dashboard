@@ -1,0 +1,14 @@
+<div class="nuke-counter-container">
+    <span class="nuke-header">Total Nukes Dropped</span>
+    <div class="nuke-number-container">
+        @if (this.nukeCount$ | async; as nuke_count) {
+            <span class="nuke-number">{{nuke_count}}</span>
+        }
+        @else {
+            <span class="nuke-number">0</span>
+        }
+        @if(showButton){
+            <p-button class="nuke-add-button" icon="pi pi-plus" [rounded]="true" severity="success" size="large" (onClick)="openAddNuke()"/>
+        }
+    </div>
+</div>

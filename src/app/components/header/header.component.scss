@@ -1,0 +1,13 @@
+.header-container {
+    display: flex;
+    height: 4rem;
+    width: 100%;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 2px solid var(--primary-color);
+    justify-content: space-between;
+
+    .header-tab {
+        gap: 0.5rem;
+    }
+}

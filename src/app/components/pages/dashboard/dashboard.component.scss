@@ -1,0 +1,27 @@
+:host {
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;    
+    overflow-y: auto;
+
+    .widget-header {
+        display: flex;
+        height: 25%;
+        margin: 1rem;
+        padding: 1rem;
+        border: 1px solid var(--border-color);
+        align-items: center;
+    }
+}
+
+.theme-button {
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+}

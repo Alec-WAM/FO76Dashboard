@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+@import "assets/styles/primary-color.scss";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+
+html, body, app-root {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    overflow: hidden;
+    margin:0;
+}

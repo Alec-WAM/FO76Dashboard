@@ -1,0 +1,64 @@
+<p-dialog header="Add Nuke" [modal]="true" [(visible)]="this.fo76Service.addNukeDialogOpen" [focusOnShow]="false" [style]="{ width: '30rem' }">
+    <div class="add-nuke-dialog-container">
+        <form [formGroup]="this.formGroup">
+            <div class="nuke-dialog-field-container">
+                <span class="nuke-dialog-label">Date/Time</span>
+                <p-calendar 
+                    inputId="date" 
+                    formControlName="date"
+                    [showTime]="true"
+                    [hourFormat]="12"
+                    [showClear]="true"
+                    [showButtonBar]="true"
+                    appendTo="body"
+                />
+                <small id="date-help">
+                    Optional date/time of nuke drop
+                </small>
+            </div>
+            <div class="nuke-dialog-field-container">
+                <span class="nuke-dialog-label">Nuke Type</span>
+                <p-dropdown
+                    inputId="nuke-type"
+                    [options]="(this.nukeTypes$ | async)!" 
+                    formControlName="nukeType"
+                    [showClear]="true" 
+                    optionLabel="name" 
+                    placeholder="Select a Nuke Type"
+                    required
+                    [ngClass]="{'ng-invalid ng-dirty': formGroup.get('nukeType')?.invalid}"
+                    appendTo="body"
+                />
+                <small class="p-error block" *ngIf="
+                    formGroup.get('nukeType')?.invalid &&
+                    formGroup.get('nukeType')?.dirty
+                ">
+                    Nuke Type is required
+                </small>
+            </div>
+            @if(formGroup.get('nukeType')?.value?.id === NUKE_TYPE_RANDOM.id){
+                <div class="nuke-dialog-field-container">
+                    <span class="nuke-dialog-label">Nuke Location</span>
+                    <input type="text" pInputText formControlName="custom_location" />
+                    <small id="location-help">
+                        Optional location of where random nuke was dropped
+                    </small>
+                </div>
+            }
+        </form>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button 
+            label="Cancel" 
+            [text]="true" 
+            severity="secondary" 
+            (click)="this.closeDialog()" />
+        <p-button 
+            label="Save" 
+            severity="success" 
+            (click)="this.onSubmit()"
+            [loading]="this.submitting"
+            [disabled]="!this.formGroup.valid"
+          />
+    </ng-template>
+</p-dialog>

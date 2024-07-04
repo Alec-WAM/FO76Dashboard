@@ -1,0 +1,8 @@
+<div class="nuke-stats-container">    
+    @if (this.nukeStats$ | async; as nuke_stats) {
+        <div class="stat-container">
+            <span class="stat-title">Nukes This Week</span>
+            <span class="stat-value">{{nuke_stats.nukesThisWeek}}</span>
+        </div>
+    }   
+</div>
