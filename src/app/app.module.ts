@@ -14,6 +14,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { StepperModule } from 'primeng/stepper';
+import { ListboxModule } from 'primeng/listbox';
+import { OrderListModule } from 'primeng/orderlist';
+import { CheckboxModule } from 'primeng/checkbox';
+import { MenuModule } from 'primeng/menu';
+import { TooltipModule } from 'primeng/tooltip';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 import { NgxEchartsModule } from 'ngx-echarts';
 
@@ -30,6 +37,8 @@ import { GoalsPageComponent } from './components/pages/goals-page/goals-page.com
 import { MomentDatePipe } from './pipes/moment-date.pipe';
 import { AddNukeDialogComponent } from './components/dialogs/add-nuke-dialog/add-nuke-dialog.component';
 import { NukeStatsComponent } from './components/widgets/nuke-stats/nuke-stats.component';
+import { LegendaryModsDialogComponent } from './components/dialogs/legendary-mods-dialog/legendary-mods-dialog.component';
+import { TimerComponent } from './components/widgets/timer/timer.component';
 
 function initializeApp(service: Fo76Service) {
   return () => {
@@ -48,7 +57,9 @@ function initializeApp(service: Fo76Service) {
     GoalsPageComponent,
     MomentDatePipe,
     AddNukeDialogComponent,
-    NukeStatsComponent
+    NukeStatsComponent,
+    LegendaryModsDialogComponent,
+    TimerComponent
   ],
   imports: [
     CommonModule,
@@ -70,6 +81,13 @@ function initializeApp(service: Fo76Service) {
     MultiSelectModule,
     TableModule,
     PaginatorModule,
+    StepperModule,
+    ListboxModule,
+    OrderListModule,
+    CheckboxModule,
+    MenuModule,
+    TooltipModule,
+    InputSwitchModule,
 
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')

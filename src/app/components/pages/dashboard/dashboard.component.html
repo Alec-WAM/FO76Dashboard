@@ -2,6 +2,11 @@
     <div class="widget-header">
         <app-nuke-counter></app-nuke-counter>
     </div>
+    <div class="nuke-timers">
+        <app-timer [timerType]="TimerType.NUKE" timerName="Silo A" [silo]="NukeSilo.SILO_A"></app-timer>
+        <app-timer [timerType]="TimerType.NUKE" timerName="Silo B" [silo]="NukeSilo.SILO_B"></app-timer>
+        <app-timer [timerType]="TimerType.NUKE" timerName="Silo C" [silo]="NukeSilo.SILO_C"></app-timer>
+    </div>
     
     <!-- <p-button 
         class='theme-button' 

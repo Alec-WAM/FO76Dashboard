@@ -1,1 +1,98 @@
-<p>goals-page works!</p>
+<div class="goals-page-container">
+    <div class="goal-type-container">
+        <div class="goal-container">
+            @if(weaponGoals$ | async; as weapon_goals){
+                <ng-template *ngTemplateOutlet="dragDropListTemplate; context: {title : 'Weapon Goals', goals: weapon_goals} "></ng-template>
+            }
+        </div>
+        <div class="goal-container">
+            @if(armorGoals$ | async; as armor_goals){
+                <ng-template *ngTemplateOutlet="dragDropListTemplate; context: {title : 'Armor Goals', goals: armor_goals} "></ng-template>
+            }
+        </div>
+        <div class="goal-container">
+            @if(powerArmorGoals$ | async; as power_armor_goals){
+                <ng-template *ngTemplateOutlet="dragDropListTemplate; context: {title : 'Power Armor Goals', goals: power_armor_goals} "></ng-template>
+            }
+        </div>
+    </div>
+</div>
+<p-button class="fab-button" icon="pi pi-plus" [rounded]="true" severity="success" size="large" pTooltip="Add Goal" (onClick)="openGoalDialog()"/>
+<app-legendary-mods-dialog></app-legendary-mods-dialog>
+<p-menu #itemGoalMenu [model]="this.goalMenuItems" [popup]="true" (onHide)="closeMenu()" />
+
+<ng-template #dragDropListTemplate let-title="title" let-goals="goals">
+    <p-orderList 
+        [value]="goals" 
+        [header]="title" 
+        [dragdrop]="true"
+    >
+        <ng-template let-goal pTemplate="item">
+            <ng-template *ngTemplateOutlet="goalItemTemplate; context: {goal : goal} "></ng-template>
+        </ng-template>
+    </p-orderList>
+</ng-template>
+
+<ng-template #goalItemTemplate let-goal="goal">
+    <div class="goal-item">
+        <div class="goal-item-header">
+            <span class="goal-item-name">{{goal.item_name}}</span>
+            <p-button 
+                icon="pi pi-ellipsis-v" 
+                [rounded]="true" [text]="true"
+                severity="secondary"
+                (onClick)="openGoalMenu($event, goal)"
+            />
+        </div>
+        <div class="goal-legendary-mods">
+            <div class="goal-legendary-mod">
+                <p-checkbox 
+                    *ngIf="goal.legendary_mod_1_id"
+                    [(ngModel)]="goal.obtained_mods"
+                    name="legendary_mod" 
+                    [value]="goal.legendary_mod_1_id"
+                    (onChange)="this.onCheckboxChange($event, goal)"
+                />
+                <div class="mod-name-container">
+                    <div class="mod-stars">
+                        <i class="pi pi-star-fill star-icon"></i>
+                    </div>
+                    <span class="mod-name">{{goal.legendary_mod_1?.name ?? "Any"}}</span>
+                </div>
+            </div>
+            <div class="goal-legendary-mod">
+                <p-checkbox 
+                    *ngIf="goal.legendary_mod_2_id"
+                    [(ngModel)]="goal.obtained_mods"
+                    name="legendary_mod" 
+                    [value]="goal.legendary_mod_2_id" 
+                    (onChange)="this.onCheckboxChange($event, goal)"
+                />
+                <div class="mod-name-container">
+                    <div class="mod-stars">
+                        <i class="pi pi-star-fill star-icon"></i>
+                        <i class="pi pi-star-fill star-icon"></i>
+                    </div>
+                    <span class="mod-name">{{goal.legendary_mod_2?.name ?? "Any"}}</span>
+                </div>
+            </div>
+            <div class="goal-legendary-mod">
+                <p-checkbox 
+                    *ngIf="goal.legendary_mod_3_id"
+                    [(ngModel)]="goal.obtained_mods"
+                    name="legendary_mod" 
+                    [value]="goal.legendary_mod_3_id" 
+                    (onChange)="this.onCheckboxChange($event, goal)"
+                />
+                <div class="mod-name-container">
+                    <div class="mod-stars">
+                        <i class="pi pi-star-fill star-icon"></i>
+                        <i class="pi pi-star-fill star-icon"></i>
+                        <i class="pi pi-star-fill star-icon"></i>
+                    </div>
+                    <span class="mod-name">{{goal.legendary_mod_3?.name ?? "Any"}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

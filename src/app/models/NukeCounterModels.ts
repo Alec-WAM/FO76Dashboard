@@ -100,6 +100,11 @@ export const DEFAULT_NUKE_TYPES: NukeType[] = [
     NUKE_TYPE_GOLIATHS
 ];
 
+export enum NukeSilo {
+    SILO_A = "Alpha",
+    SILO_B = "Bravo",
+    SILO_C = "Charlie"
+}
 export interface NukeDrop {
     id: string;
     date?: moment.Moment;

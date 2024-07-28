@@ -10,4 +10,10 @@
     .header-tab {
         gap: 0.5rem;
     }
+
+    .header-buttons {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
 }

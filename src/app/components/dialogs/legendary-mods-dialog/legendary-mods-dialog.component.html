@@ -1,0 +1,245 @@
+<p-dialog 
+    [header]="this.fo76Service.editGoal ? 'Edit Goal: ' + this.fo76Service.editGoal.item_name : 'Create Goal'" 
+    [modal]="true" 
+    [(visible)]="this.fo76Service.addGoalDialogOpen" 
+    [focusOnShow]="false" 
+    [style]="{ width: '50vw' }"
+>
+    <form [formGroup]="this.formGroup">
+        <p-stepper [(activeStep)]="this.activeStep">
+            <p-stepperPanel header="Item Type">
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                    <div class="goal-page-container">
+                        <div class="item-picker">
+                            <label for="item-name">Item Name</label>
+                            <input 
+                                pInputText 
+                                id="item-name" 
+                                formControlName="itemName"
+                                [maxlength]="MAX_ITEM_NAME_LENGTH"
+                                autocomplete="off"
+                            />
+                            <label for="item-type">Item Type</label>
+                            <p-dropdown 
+                                formControlName="itemType"
+                                id="item-type" 
+                                [options]="ITEM_TYPES"
+                                optionLabel="name"
+                                placeholder="Select an Item Type"
+                                (onChange)="onItemTypeChange($event)"
+                            />
+                        </div>
+                    </div>
+                    <div class="goal-page-footer footer-next">
+                        <p-button 
+                            label="Next" 
+                            icon="pi pi-arrow-right" 
+                            iconPos="right" 
+                            [disabled]="!this.formGroup.valid"    
+                            (onClick)="nextCallback.emit()"
+                        />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Level 1 Mod">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
+                    <div class="goal-page-container">
+                        <div class="normal-page">
+                            <div class="mod-list-container">
+                                <div class="mod-notes-container">
+                                    <p-listbox 
+                                        [options]="mods_level1" 
+                                        formControlName="level1_mod" 
+                                        optionLabel="name"
+                                        [filter]="true"
+                                        [filterFields]="['name', 'description']"
+                                        [style]="{ width: '100%' }" 
+                                        [listStyle]="{'height': '15rem'}" 
+                                    >
+                                        <ng-template let-mod pTemplate="item">
+                                            <div class="legendary-mod-list-item">
+                                                <span class="list-mod-name">{{mod.name}}</span>
+                                                <span class="list-mod-description">{{mod.description}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-listbox>
+                                </div>
+
+                                <div class="mod-notes-container">
+                                    <div class="mod-notes" *ngIf="formGroup.get('level1_mod').value as mod">
+                                        <span class="mod-title">{{mod.name}}</span>
+                                        <span class="mod-description">{{mod.description}}</span>
+                                        <span class="mod-note" *ngFor="let note of mod.notes">
+                                             {{" • " + note}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goal-page-footer footer-both">
+                        <p-button 
+                            label="Back" 
+                            icon="pi pi-arrow-left" 
+                            (onClick)="prevCallback.emit()" />
+                        <p-button 
+                            label="Next" 
+                            icon="pi pi-arrow-right" 
+                            iconPos="right" 
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Level 2 Mod">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback" let-index="index">
+                    <div class="goal-page-container">
+                        <div class="normal-page">
+                            <div class="mod-list-container">
+                                <div class="mod-notes-container">
+                                    <p-listbox 
+                                        [options]="mods_level2" 
+                                        formControlName="level2_mod" 
+                                        optionLabel="name"
+                                        [filter]="true"
+                                        [filterFields]="['name', 'description']"
+                                        [style]="{ width: '100%' }" 
+                                        [listStyle]="{'height': '15rem'}" 
+                                    >
+                                        <ng-template let-mod pTemplate="item">
+                                            <div class="legendary-mod-list-item">
+                                                <span class="list-mod-name">{{mod.name}}</span>
+                                                <span class="list-mod-description">{{mod.description}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-listbox>
+                                </div>
+
+                                <div class="mod-notes-container">
+                                    <div class="mod-notes" *ngIf="formGroup.get('level2_mod').value as mod">
+                                        <span class="mod-title">{{mod.name}}</span>
+                                        <span class="mod-description">{{mod.description}}</span>
+                                        <span class="mod-note" *ngFor="let note of mod.notes">
+                                             {{" • " + note}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goal-page-footer footer-both">
+                        <p-button 
+                            label="Back" 
+                            icon="pi pi-arrow-left" 
+                            (onClick)="prevCallback.emit()" />
+                        <p-button 
+                            label="Next" 
+                            icon="pi pi-arrow-right" 
+                            iconPos="right" 
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Level 3 Mod">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback"  let-nextCallback="nextCallback" let-index="index">
+                    <div class="goal-page-container">
+                        <div class="normal-page">
+                            <div class="mod-list-container">
+                                <div class="mod-notes-container">
+                                    <p-listbox 
+                                        [options]="mods_level3" 
+                                        formControlName="level3_mod" 
+                                        optionLabel="name"
+                                        [filter]="true"
+                                        [filterFields]="['name', 'description']"
+                                        [style]="{ width: '100%' }" 
+                                        [listStyle]="{'height': '15rem'}" 
+                                    >
+                                        <ng-template let-mod pTemplate="item">
+                                            <div class="legendary-mod-list-item">
+                                                <span class="list-mod-name">{{mod.name}}</span>
+                                                <span class="list-mod-description">{{mod.description}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-listbox>
+                                </div>
+
+                                <div class="mod-notes-container">
+                                    <div class="mod-notes" *ngIf="formGroup.get('level3_mod').value as mod">
+                                        <span class="mod-title">{{mod.name}}</span>
+                                        <span class="mod-description">{{mod.description}}</span>
+                                        <span class="mod-note" *ngFor="let note of mod.notes">
+                                             {{" • " + note}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goal-page-footer footer-both">
+                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button 
+                            label="Next" 
+                            icon="pi pi-arrow-right" 
+                            iconPos="right" 
+                            (onClick)="nextCallback.emit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+            <p-stepperPanel header="Review">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+                    <div class="goal-page-container">
+                        <div class="normal-page review-page">
+                            <span class="item-name-title">{{formGroup.get('itemName').value ?? "Invalid Name"}}</span>
+                            <span class="item-type-text">{{formGroup.get('itemType').value?.name ?? "Invalid Item Type"}}</span>
+                            <div class="mod-list-container">
+                                <div class="star-icon-container">
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                </div>                                
+                                @if(formGroup.get('level1_mod').value){
+                                    <div class="legendary-mod-list-item">
+                                        <span class="list-mod-name">{{formGroup.get('level1_mod').value.name}}</span>
+                                        <span class="list-mod-description">{{formGroup.get('level1_mod').value.description}}</span>
+                                    </div>
+                                }
+                                @else {
+                                    <span class="none-mod">Any</span>
+                                }
+                                <div class="star-icon-container">
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                </div>
+                                @if(formGroup.get('level2_mod').value){
+                                    <div class="legendary-mod-list-item">
+                                        <span class="list-mod-name">{{formGroup.get('level2_mod').value.name}}</span>
+                                        <span class="list-mod-description">{{formGroup.get('level2_mod').value.description}}</span>
+                                    </div>
+                                }
+                                @else {
+                                    <span class="none-mod">Any</span>
+                                }
+                                <div class="star-icon-container">
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                    <i class="pi pi-star-fill star-icon"></i>
+                                </div>
+                                @if(formGroup.get('level3_mod').value){
+                                    <div class="legendary-mod-list-item">
+                                        <span class="list-mod-name">{{formGroup.get('level3_mod').value.name}}</span>
+                                        <span class="list-mod-description">{{formGroup.get('level3_mod').value.description}}</span>
+                                    </div>
+                                }
+                                @else {
+                                    <span class="none-mod">Any</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="goal-page-footer footer-both">
+                        <p-button label="Back" icon="pi pi-arrow-left" (onClick)="prevCallback.emit()" />
+                        <p-button label="Add" icon="pi pi-check" severity="success" (onClick)="onSubmit()" />
+                    </div>
+                </ng-template>
+            </p-stepperPanel>
+        </p-stepper>
+    </form>
+</p-dialog>

@@ -1,0 +1,17 @@
+<div class="timer-container">
+    <span class="timer-header">{{this.timerName() ?? "Invalid Timer"}}</span>
+    <div class="timer-main-container">
+        @if (this.timeLeft$| async; as timer_left) {
+            <span class="timer-number">{{timer_left}}</span>
+        }
+        @else {
+            <span class="timer-number">00:00:00</span>
+        }
+        <p-button 
+            class="timer-button" 
+            [icon]="'pi ' + (!this.timerDate ? 'pi-stopwatch' : 'pi-times')" [rounded]="true" 
+            [severity]="!this.timerDate ? 'success' : 'danger'" 
+            (onClick)="this.toggleTimer()"
+        />
+    </div>
+</div>

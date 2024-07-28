@@ -3,7 +3,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { liveQuery } from 'dexie';
 import * as uuid from 'uuid';
 import { NUKE_TYPE_RANDOM, NukeType } from '../../../models/NukeCounterModels';
-import { getCurrentDB } from '../../../services/db';
 import { Fo76Service } from '../../../services/fo76.service';
 
 @Component({
@@ -21,7 +20,7 @@ export class AddNukeDialogComponent {
     custom_location: new FormControl<string | null>(null)
   });
 
-  nukeTypes$ = liveQuery(() => getCurrentDB().nukeTypes.toArray());
+  nukeTypes$ = liveQuery(() => this.fo76Service.getCurrentDB().nukeTypes.toArray());
   submitting: boolean = false;
 
   constructor(public fo76Service: Fo76Service){
@@ -39,7 +38,7 @@ export class AddNukeDialogComponent {
   async onSubmit(): Promise<void> {
     console.log("Submit Nuke")
     this.submitting = true;
-    await getCurrentDB().nukeDrops.add({
+    await this.fo76Service.getCurrentDB().nukeDrops.add({
       id: uuid.v4(),
       date: this.formGroup.get("date")?.value,
       type_id: this.formGroup.get("nukeType").value.id,

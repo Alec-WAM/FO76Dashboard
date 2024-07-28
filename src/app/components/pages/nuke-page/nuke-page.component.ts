@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { getCurrentDB } from '../../../services/db';
 import { liveQuery, Observable as DexieObservable, IndexableTypePart, IndexableTypeArray } from 'dexie';
 import { NukeBoss, NukeDrop, NukeType } from '../../../models/NukeCounterModels';
 import { deepCopy, rgba2hex } from '../../../utils/util-functions';
@@ -43,7 +42,7 @@ interface SeriesData {
 export class NukePageComponent {
   readonly DATE_FORMAT = "MMMM Do YYYY, h:mm a";
   tableNukeDrops$ = liveQuery(() => this.getNukeDrops());
-  nukeTypes$ = liveQuery(() => getCurrentDB().nukeTypes.toArray());
+  nukeTypes$ = liveQuery(() => this.fo76Service.getCurrentDB().nukeTypes.toArray());
   
   filterNukeType: NukeType[] = [];
   currentDrops: TableNukeDrop[] = [];
@@ -84,12 +83,12 @@ export class NukePageComponent {
 
   async getNukeDrops(): Promise<TableNukeDrop[]> {
     // Query
-    const original_drops = await getCurrentDB().nukeDrops.toArray();
+    const original_drops = await this.fo76Service.getCurrentDB().nukeDrops.toArray();
     
     const new_drops: TableNukeDrop[] = await Promise.all(original_drops.map(async drop => {
       const tableDrop = deepCopy(drop) as TableNukeDrop;
-      const nukeType = await getCurrentDB().nukeTypes.get(drop.type_id);
-      const nukeBoss = nukeType.boss_id ? await getCurrentDB().nukeBosses.get(nukeType.boss_id) : null;
+      const nukeType = await this.fo76Service.getCurrentDB().nukeTypes.get(drop.type_id);
+      const nukeBoss = nukeType.boss_id ? await this.fo76Service.getCurrentDB().nukeBosses.get(nukeType.boss_id) : null;
       tableDrop.date = drop.date ? moment.default(drop.date) : null;
       tableDrop.nukeType = nukeType;
       tableDrop.nukeBoss = nukeBoss;
@@ -116,13 +115,13 @@ export class NukePageComponent {
   }
 
   private getNukeDropSeriesData(): Observable<SeriesData[]> {
-    return from(getCurrentDB().nukeDrops.orderBy('type_id').uniqueKeys()).pipe(
+    return from(this.fo76Service.getCurrentDB().nukeDrops.orderBy('type_id').uniqueKeys()).pipe(
       concatMap((data: IndexableTypeArray, index: number) => {
         data
         const observables = data.map(async part => {
             const uniqueId = part as string;
-            const name = (await getCurrentDB().nukeTypes.get(uniqueId)).name ?? "Error";
-            const count = await getCurrentDB().nukeDrops.where("type_id").equals(uniqueId).count();
+            const name = (await this.fo76Service.getCurrentDB().nukeTypes.get(uniqueId)).name ?? "Error";
+            const count = await this.fo76Service.getCurrentDB().nukeDrops.where("type_id").equals(uniqueId).count();
             return {
               name: name,
               value: count
@@ -140,7 +139,8 @@ export class NukePageComponent {
     console.log(fixedColor)
     return {
       tooltip: {
-        trigger: 'item'
+        trigger: 'item',
+        formatter: '{a} <br/>{b}: {c} ({d}%)'
       },
       title: {
         text: 'Nuke Drop Types',
@@ -179,11 +179,11 @@ export class NukePageComponent {
   }
 
   async getNukeTypeCounts(): Promise<SeriesData[]> {
-    const keys = await getCurrentDB().nukeDrops.orderBy('type_id').uniqueKeys();
+    const keys = await this.fo76Service.getCurrentDB().nukeDrops.orderBy('type_id').uniqueKeys();
     return Promise.all(keys.map(async (value) => {
       const uniqueId = value as string;
-      const name = (await getCurrentDB().nukeTypes.get(uniqueId)).name ?? "Error";
-      const count = await getCurrentDB().nukeDrops.where("type_id").equals(uniqueId).count();
+      const name = (await this.fo76Service.getCurrentDB().nukeTypes.get(uniqueId)).name ?? "Error";
+      const count = await this.fo76Service.getCurrentDB().nukeDrops.where("type_id").equals(uniqueId).count();
       return {
         name: name,
         value: count

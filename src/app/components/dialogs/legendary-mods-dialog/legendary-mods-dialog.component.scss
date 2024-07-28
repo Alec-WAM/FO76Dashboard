@@ -1,0 +1,133 @@
+.goal-page-container {
+    display: flex;
+    flex-direction: column;
+    height: 20rem;
+
+    align-items: center;
+    justify-content: center;
+
+    .item-picker {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .p-inputtext {
+            width: 15rem;
+        }
+
+        .p-dropdown {
+            width: 15rem;
+        }
+    }
+
+    .normal-page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        
+        &.review-page {
+            width: 25rem;
+            padding: 1rem;
+            gap: 5px;
+
+            .item-name-title {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .item-type-text {
+                font-size: 18px;
+            }
+
+            .mod-list-container {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                padding: 1rem;
+                margin-top: 0.5rem;
+                border: 1px solid var(--border-color);
+                border-radius: 0.25rem;
+
+                .none-mod {
+                    font-size: 18px;
+                    font-style: oblique;
+                }
+
+                .star-icon-container {
+                    display: flex;
+                    gap: 5px;
+                    
+                    .star-icon {
+                        color: #dec305;
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        font-size: 1.5rem
+                    }
+                }
+            }
+
+        }
+
+        .mod-list-container {
+            display: flex;
+            width: 100%;
+            gap: 2rem;
+
+            .mod-notes-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                justify-content: center;
+
+                .mod-title {
+                    font-size: 20px;
+                    font-weight: bold;
+                }
+
+                .mod-description {
+                    font-size: 14px;
+                }
+
+                .mod-notes {
+                    display: flex;
+                    flex-direction: column;
+                    overflow-y: auto;
+
+                    .mod-note {
+                        margin-left: 1rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.goal-page-footer {
+    display: flex;
+    width: 100%;
+
+    &.footer-back {
+        justify-content: start;
+    }
+    
+    &.footer-next {
+        justify-content: end;
+    }
+
+    &.footer-both {
+        justify-content: space-between;
+    }
+}
+
+.legendary-mod-list-item {
+    display: flex;
+    flex-direction: column;
+
+    .list-mod-name {
+        font-weight: bold;
+    }
+
+    .list-mod-description {
+        font-size: 12px;
+    }
+}

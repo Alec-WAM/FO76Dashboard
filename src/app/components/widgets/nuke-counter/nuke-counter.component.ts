@@ -1,6 +1,5 @@
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { liveQuery } from 'dexie';
-import { getCurrentDB } from '../../../services/db';
 import { Fo76Service } from '../../../services/fo76.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class NukeCounterComponent{
   
   @Input('showButton') showButton = true;
   
-  nukeCount$ = liveQuery(() => getCurrentDB().nukeDrops.count());
+  nukeCount$ = liveQuery(() => this.fo76Service.getCurrentDB().nukeDrops.count());
 
   constructor(public fo76Service: Fo76Service){}
 

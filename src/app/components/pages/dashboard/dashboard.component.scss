@@ -2,6 +2,7 @@
     display: flex;
     flex: 1;
     height: 100%;
+    overflow-y: auto;
 }
 
 .dashboard-container {
@@ -12,11 +13,22 @@
 
     .widget-header {
         display: flex;
-        height: 25%;
         margin: 1rem;
-        padding: 1rem;
+        padding: 2rem;
         border: 1px solid var(--border-color);
         align-items: center;
+        gap: 1rem;
+    }
+
+    .nuke-timers {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 1rem;
+        padding: 2rem;
+        border: 1px solid var(--border-color);
+        align-items: center;
+        gap: 1rem;
     }
 }
 

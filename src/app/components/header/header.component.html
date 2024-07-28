@@ -19,12 +19,15 @@
             </ng-template>
         </ng-template> -->
     </p-tabMenu>
-    <p-button 
-        class='theme-button' 
-        [icon]="'pi ' + (this.themeService.getTheme() === Theme.DARK ? 'pi-moon' : 'pi-sun')" 
-        [rounded]="true"
-        pTooltip="Change Theme"
-        (onClick)="this.themeService.switchTheme()"
+    <div class="header-buttons">
+        <p-inputSwitch [(ngModel)]="this.usingTestDB" />
+        <p-button 
+            class='theme-button' 
+            [icon]="'pi ' + (this.themeService.getTheme() === Theme.DARK ? 'pi-moon' : 'pi-sun')" 
+            [rounded]="true"
+            pTooltip="Change Theme"
+            (onClick)="this.themeService.switchTheme()"
         >
-    </p-button>
+        </p-button>
+    </div>
 </div>

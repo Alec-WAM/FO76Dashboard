@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { liveQuery } from 'dexie';
-import { getCurrentDB } from '../../../services/db';
 import moment from 'moment';
-import { NukeType } from '../../../models/NukeCounterModels';
+import { Fo76Service } from '../../../services/fo76.service';
 
 interface NukeStats {
   nukesThisWeek: number;
@@ -17,10 +16,12 @@ export class NukeStatsComponent {
 
   nukeStats$ = liveQuery(() => this.getThisWeeksNukesCount());
 
+  constructor(public fo76Service: Fo76Service){}
+
   async getThisWeeksNukesCount(): Promise<NukeStats> {
     const now = moment();
 
-    const collection_dates = getCurrentDB().nukeDrops.orderBy('date');
+    const collection_dates = this.fo76Service.getCurrentDB().nukeDrops.orderBy('date');
     const thisWeekCount = await collection_dates.filter((drop) => {
       if(!drop.date){
         return false;
